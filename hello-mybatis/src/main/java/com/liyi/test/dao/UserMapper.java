@@ -1,5 +1,7 @@
 package com.liyi.test.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.liyi.test.domain.User;
 
 public interface UserMapper {
