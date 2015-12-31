@@ -19,6 +19,7 @@
 	
 	 <!-- 扫描包 -->  
     <context:component-scan base-package="com.liyi.*" />   
+<<<<<<< HEAD
      <!-- 引入jdbc配置文件 -->  
     <context:property-placeholder location="classpath*:jdbc.properties" />  
   
@@ -27,6 +28,14 @@
 			<property name="url" value="${url}" />
 			<property name="username" value="${username}" />
 			<property name="password" value="${password}" />
+=======
+  
+   	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+			<property name="url" value="jdbc:mysql://localhost/test" />
+			<property name="username" value="root" />
+			<property name="password" value="1234" />
+>>>>>>> 79779559ac47f69d12be35b1da5b9f1fe60ee242
 			<property name="defaultAutoCommit" value="false" />
 
 			<!-- 配置初始化大小、最小、最大 -->

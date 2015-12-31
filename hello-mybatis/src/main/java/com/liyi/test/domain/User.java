@@ -20,6 +20,9 @@ public class User {
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
+<<<<<<< HEAD
 
     
+=======
+>>>>>>> 79779559ac47f69d12be35b1da5b9f1fe60ee242
 }
