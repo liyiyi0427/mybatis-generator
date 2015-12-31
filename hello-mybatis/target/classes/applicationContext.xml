@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	 xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	
+	 <!-- 扫描包 -->  
+    <context:component-scan base-package="com.liyi.*" />   
+     <!-- 引入jdbc配置文件 -->  
+    <context:property-placeholder location="classpath*:jdbc.properties" />  
+  
+   	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+			<property name="driverClassName" value="${driver}" />
+			<property name="url" value="${url}" />
+			<property name="username" value="${username}" />
+			<property name="password" value="${password}" />
+			<property name="defaultAutoCommit" value="false" />
+
+			<!-- 配置初始化大小、最小、最大 -->
+			<property name="initialSize" value="1" />
+			<property name="minIdle" value="1" />
+			<property name="maxIdle" value="20" />
+			<property name="maxActive" value="20" />
+
+			<!-- 配置获取连接等待超时的时间 -->
+			<property name="maxWait" value="60000" />
+
+			<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+			<property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+			<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+			<property name="minEvictableIdleTimeMillis" value="300000" />
+		</bean>
+		
+		 <!-- 这里的dataSource要与sqlSessionFactory的dataSource一致，否则事务无效 -->  
+	    <bean id="transactionManager"  
+	        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+	        <property name="dataSource" ref="dataSource" />  
+	    </bean>  
+	    
+	    <!-- 配置sessionFactory -->
+	    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+	        <property name="dataSource" ref="dataSource" />  
+	        <property name="configLocation" value="classpath:/mybatis-configuration.xml"></property>  
+	        <property name="mapperLocations" value="classpath:/com/liyi/test/mapping/*.xml" />
+    	</bean>  
+    	
+    	<!-- 扫描mybatis映射接口类 -->  
+		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+		    <property name="basePackage" value="com.liyi.test.dao"/>  
+		    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>  
+		</bean>  
+    	
+		<!-- 使用注解方式的事务 -->  
+		<tx:annotation-driven transaction-manager="transactionManager" />     
+
+	
+
+</beans>
