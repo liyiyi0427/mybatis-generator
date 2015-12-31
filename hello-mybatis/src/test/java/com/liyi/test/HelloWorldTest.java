@@ -1,11 +1,8 @@
 package com.liyi.test;
 
-<<<<<<< HEAD
 import java.util.HashSet;
 import java.util.Set;
 
-=======
->>>>>>> 79779559ac47f69d12be35b1da5b9f1fe60ee242
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -27,9 +24,4 @@ public class HelloWorldTest {
 		 User user =  userMapper.selectByPrimaryKey(1);
 		 System.out.println(user.getName());
 	  }
-
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 79779559ac47f69d12be35b1da5b9f1fe60ee242
