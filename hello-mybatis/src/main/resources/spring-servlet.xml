@@ -17,7 +17,11 @@
         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">  
    
     <mvc:annotation-driven />  
-    <context:component-scan base-package="com.liyi.*" />  
+<!--     <context:component-scan base-package="com.liyi.*" />   -->
+  	<context:component-scan base-package="com.liyi" use-default-filters="false">
+	  <!-- 扫描符合@Controller的类 -->
+	  <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
      <!--创建jdbc数据源 -->  
      <bean id="jspViewResolver"
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">
